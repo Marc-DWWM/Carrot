@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block title %}Panneau de Contrôle Admin{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur le panneau de contrôle administrateur</h1>
+    <p>Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a></p>
+{% endblock %}

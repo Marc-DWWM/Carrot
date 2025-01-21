@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur votre profil</h1>
+    <p>Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a></p>
+{% endblock %}

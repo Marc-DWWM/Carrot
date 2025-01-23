@@ -34,6 +34,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+     /**
+     * @Assert\EqualTo(propertyPath="password", message="Les 2 mots de passe doivent être identiques")
+     */
+    private $passwordConfirm;
 
     #[ORM\Column(length: 50)]
     private ?string $username = null;
@@ -103,6 +107,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getPasswordConfirm(): ?string
+    {
+        return $this->passwordConfirm;
+    }
+
+    public function setPasswordConfirm(string $passwordConfirm): string
+    {
+        $this->passwordConfirm = $passwordConfirm;
+
+        return $passwordConfirm;
+    }
 
     /**
      * @see UserInterface
@@ -124,4 +139,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+ 
 }

@@ -4,23 +4,37 @@
 {% endblock %}
 
 {% block body %}
+	<div class="img_height">
+		<img src="{{ asset('images/logo_carrot.png') }}" class="logo_carrot rounded mx-auto mt-5 ms-5" alt="logo carrot">
+	</div>
 	<h1>Suivez le chemin</h1>
 	<h2>Inscrivez-vous.</h2>
 
 	{{ form_errors(registrationForm) }}
 
 	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.username) }}
-	{{ form_row(registrationForm.email) }}
-	{{ form_row(registrationForm.plainPassword.first, {
-            label: 'Password'
-        }) }}
-{{ form_row(registrationForm.plainPassword.second, {
-            label: 'password confirmation'
-        }) }}
-	{{ form_row(registrationForm.agreeTerms) }}
-
-
-	<button type="submit" class="btn">Register</button>
+	<div class="mx-5 ps-5 pt-3 pb-4" style="max-width: 600px; width: 100%;">
+		{{ form_row(registrationForm.username) }}
+	</div>
+	<div class="mx-5 ps-5 pt-3 pb-4" style="max-width: 600px; width: 100%;">
+		{{ form_row(registrationForm.email) }}
+	</div>
+	<div class="mx-5 ps-5 pt-3 pb-4" style="max-width: 600px; width: 100%;">
+		{{ form_row(registrationForm.plainPassword.first) }}
+	</div>
+	<div class="mx-5 ps-5 pt-3 pb-4" style="max-width: 600px; width: 100%;">
+		{{ form_row(registrationForm.plainPassword.second) }}
+	</div>
+	<div class="agree_terms mx-5 ps-5 pt-3 pb-2" style="max-width: 600px; width: 100%;">
+		{{ form_row(registrationForm.agreeTerms) }}
+	</div>
+	<div class="mx-5 ps-5 pt-3 pb-2 d-grid gap-2" style="max-width: 600px; width: 100%;">
+		<button type="submit" class="button_register btn rounded-pill">S'enregistrer</button>
+	</div>
 	{{ form_end(registrationForm) }}
+
+	<h3 class="title_register">Vous avez déjà un compte ?</h3>
+	<div class="mx-5 ps-5 pt-3 pb-2 d-grid gap-2" style="max-width: 500px; width: 100%;">
+		<a href="{{ path('app_login') }}" class="connect rounded-pill text-decoration-none">Se connecter</a>
+	</div>
 {% endblock %}

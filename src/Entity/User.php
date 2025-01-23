@@ -107,17 +107,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    public function getPasswordConfirm(): ?string
-    {
-        return $this->passwordConfirm;
-    }
-
-    public function setPasswordConfirm(string $passwordConfirm): string
-    {
-        $this->passwordConfirm = $passwordConfirm;
-
-        return $passwordConfirm;
-    }
 
     /**
      * @see UserInterface

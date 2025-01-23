@@ -1,7 +1,28 @@
 {% extends 'base.html.twig' %}
+
+
 {% block title %}Profil Utilisateur{% endblock %}
 
 {% block body %}
+
     <h1>Bienvenue sur votre profil</h1>
-    <p>Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a></p>
+    <p>{{ app.user.username }}</p>
+    <a href="{{ path('app_logout') }}">Déconnexion</a>
+
+    <h2>Créer un post</h2>
+    {{ form_start(postForm) }}
+        {{ form_row(postForm.content) }}
+
+        <button type="submit" class="btn">Planter</button>
+    {{ form_end(postForm) }}
+    
+
+        <h2>Vos posts</h2>
+        <ul>
+            {% for post in posts %}
+                <li>{{ post.content }}</li>
+            {% endfor %}
+        </ul>
+    
+
 {% endblock %}

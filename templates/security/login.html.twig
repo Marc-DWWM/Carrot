@@ -1,33 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in!
+{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+	<div class="head_desktop">
+		<a href="{{ path('app_home_page') }}"><img class="img_height" src="{{ asset('images/logo_carrot.png') }}" class="logo_carrot rounded mx-auto mt-5 ms-5" alt="logo carrot"></a>
 
-    <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+		<h1 class="ps-5">Suivez le chemin</h1>
+	</div>
+	<h2 class="ps-5">Connectez-vous à Carrot</h2>
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+		{% if app.user %}
+			<div class="mb-3">
+				You are logged in as
+				{{ app.user.userIdentifier }},
+				<a href="{{ path('app_logout') }}">Logout</a>
+			</div>
+		{% endif %}
+		<div class="ps-5 d-flex flex-column align-items-center justify-content-center">
+			<div class="form-floating mb-3 w-25 pb-4">
+				<input type="email" value="{{ last_username }}" name="email" id="floatingInput" class="rounded-pill" autocomplete="email" placeholder="Email" required autofocus>
+				<label for="floatingInput">Email</label>
+			</div>
+			<div class="form-floating mb-3 w-25 pb-4">
+				<input type="password" name="password" id="floatingPassword" class="rounded-pill" autocomplete="current-password" placeholder="Mot de passe" required>
+				<label for="floatingPassword">Mot de passe</label>
+			</div>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
-
-<a href="{{ path('app_forgot_password_request') }}">Forgot your password?</a>
+			<button class="mb-5 btn btn-lg rounded-pill connect" type="submit">
+				Se connecter
+			</button>
+		</div>
+	</form>
+	<div class="ps-5 d-flex justify-content-center align-content-center">
+		<a href="{{ path('app_forgot_password_request') }}" class="forgot-password rounded-pill text-decoration-none">Mot de passe oublié ?</a>
+	</div>
 {% endblock %}

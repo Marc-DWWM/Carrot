@@ -36,12 +36,9 @@
     background-color: #f8f7f4;
     }
 
-    label {
-    color: #f8f7f4;
-    font-size: 30px;
-    }
+
     .form-group {
-    
+    color: #f8f7f4;
     width: 600px;
     } 
     input {
@@ -77,6 +74,22 @@
     color: #f8f7f4;
     background-color: #ff6139;
     }
+    .forgot-password {
+        width: 500px;
+        color: #f8f7f4;
+        border: 2px solid #f8f7f4;
+        height: 85px;
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        }
+        .forgot-password:hover {
+        color: #ff6139;
+        background-color: #f8f7f4;
+        }
+
 }
 
 @media (min-width: 992px) {
@@ -145,5 +158,10 @@
     } 
     .checkbox {
         width: 5%;
+        }
+        .forgot-password {
+            height: 60px;
+            font-size: 15px;
+            width: 200px;
         }
 }

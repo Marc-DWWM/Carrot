@@ -52,7 +52,7 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = '3.38';
     })
-
+    .addStyleEntry('custom', './assets/styles/app.css') 
     // enables Sass/SCSS support
     //.enableSassLoader()
 
@@ -71,3 +71,5 @@ Encore
 ;
 
 module.exports = Encore.getWebpackConfig();
+
+

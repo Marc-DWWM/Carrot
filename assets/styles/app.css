@@ -1,62 +1,69 @@
-body {
+@media (min-width: 576px) {
+    body {
     background-color: #41342b;
-}
-h1 {
+    }
+    h1 {
     font-size: 90px;
     padding-left: 100px;
     font-weight: bold;
-}
-h2 {
+    }
+    h2 {
     font-size: 70px;
     padding-left: 100px;
     padding-bottom: 30px;
-}
-.title_register {
+    }
+    .title_register {
     font-size: 50px;
     padding-top: 100px;
     padding-left: 100px;
     padding-bottom: 20px;
-}
-h1, h2, h3 {
+    }
+    h1, h2, h3 {
     font-family: "Fredoka", serif;
     color: #f8f7f4;
-}
-.button_register {
+    }
+    .button_register {
+    width: 600px;
     color: #f8f7f4;
     background-color: #ff6139;
     height: 85px;
     font-size: 40px;
     font-weight: bold;
-}
-.button_register:hover {
+    }
+    .button_register:hover {
     color: #ff6139;
     border: 3px solid #ff6139;
     background-color: #f8f7f4;
-}
+    }
 
-label {
+    label {
     color: #f8f7f4;
     font-size: 30px;
-}
-input {
+    }
+    .form-group {
+    
+    width: 600px;
+    } 
+    input {
     height: 85px;
-}
-input::placeholder {
+    }
+    input::placeholder {
     padding-left: 20px;
     font-size: 35px;
-}
+    }
 
-.logo_carrot {
+    .logo_carrot {
     width: 33%;
-}
-.img_height {
+    }
+    .img_height {
     height: 400px;
-}
+    }
 
-.checkbox {
+    .checkbox {
     width: 8%;
-}
-.connect {
+    }
+    .connect {
+    width: 500px;
     color: #ff6139;
     border: 2px solid #ff6139;
     height: 85px;
@@ -65,8 +72,78 @@ input::placeholder {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-}
-.connect:hover {
+    }
+    .connect:hover {
     color: #f8f7f4;
     background-color: #ff6139;
+    }
+}
+
+@media (min-width: 992px) {
+    h1 {
+        font-size: 60px;
+        padding-left: 80px;
+    }
+    h2 {
+        text-align: center;
+        font-size: 50px;
+        padding-left: 80px;
+        padding-top: 50px;
+        padding-bottom: 70px;
+    }
+    .title_register {
+        font-size: 30px;
+        text-align: center;
+    }
+    .connect {
+        height: 60px;
+        font-size: 20px;
+        width: 200px;
+    }
+    .form-actions {
+        display: flex;
+        justify-content: center;
+    }
+    .logo_carrot {
+        width: 50%;
+    }
+    .img_height {
+        padding-left: 50px;
+        height: 200px;
+    }
+   
+    .head_desktop {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .form-group {
+    
+        width: 500px;
+        } 
+        input {
+        height: 50px;
+        }
+        input::placeholder {
+        padding-left: 20px;
+        font-size: 20px;
+    }
+    label {
+        font-size: 20px;
+        }
+     .button_register {
+        width: 300px;
+        height: 50px;
+        font-size: 20px;
+    } 
+    .checkbox {
+        width: 5%;
+        }
 }

@@ -1,22 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Reset your password
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+	{% for flash_error in app.flashes('reset_password_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+	<div class="head_desktop">
+		<a href="{{ path('app_home_page') }}"><img class="img_height" src="{{ asset('images/logo_carrot.png') }}" class="logo_carrot rounded mx-auto mt-5 ms-5" alt="logo carrot"></a>
+		<h1 class="title-mail pb-5 pt-5">Entrer votre email</h1>
+	</div>
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address, and we will send you a
-                link to reset your password.
-            </small>
-        </div>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+	{{ form_start(requestForm) }}
+	<div class="desktop-reset">
+		<div class="form-group mx-5 ps-5 pt-3 pb-4 col-12 col-md-6">
+			{{ form_row(requestForm.email) }}
+		</div>
+		<div>
+			<p class="ps-5">
+				Entrer votre adresse email pour recevoir un lien de modification de mot de passe.
+			</p>
+		</div>
+
+		<button class="btn-reset rounded-pill w-25">Valider</button>
+	</div>
+	{{ form_end(requestForm) }}
 {% endblock %}

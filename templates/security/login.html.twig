@@ -4,42 +4,49 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="head_desktop">
-		<a href="{{ path('app_home_page') }}"><img class="img_height" src="{{ asset('images/logo_carrot.png') }}" class="logo_carrot rounded mx-auto mt-5 ms-5" alt="logo carrot"></a>
-
-		<h1 class="ps-5">Suivez le chemin</h1>
+		<a href="{{ path('app_home_page') }}">
+			<img  class="img_height" src="{{ asset('images/logo_carrot.png') }}" alt="logo carrot" class="logo_carrot rounded mx-auto mt-5">
+		</a>
+		<h1 class="title-carrot">Suivez le chemin</h1>
 	</div>
-	<h2 class="ps-5">Connectez-vous à Carrot</h2>
-	<form method="post">
+	<h2 class="title-login">Connectez-vous</h2>
+
+	<form method="post" class="d-flex flex-column align-items-center mt-4">
 		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			<div class="alert alert-danger w-50 text-center">
+				{{ error.messageKey|trans(error.messageData, 'security') }}
+			</div>
 		{% endif %}
 
 		{% if app.user %}
-			<div class="mb-3">
+			<div class="alert alert-info w-50 text-center">
 				You are logged in as
 				{{ app.user.userIdentifier }},
 				<a href="{{ path('app_logout') }}">Logout</a>
 			</div>
 		{% endif %}
-		<div class="ps-5 d-flex flex-column align-items-center justify-content-center">
-			<div class="form-floating mb-3 w-25 pb-4">
-				<input type="email" value="{{ last_username }}" name="email" id="floatingInput" class="rounded-pill" autocomplete="email" placeholder="Email" required autofocus>
-				<label for="floatingInput">Email</label>
-			</div>
-			<div class="form-floating mb-3 w-25 pb-4">
-				<input type="password" name="password" id="floatingPassword" class="rounded-pill" autocomplete="current-password" placeholder="Mot de passe" required>
-				<label for="floatingPassword">Mot de passe</label>
-			</div>
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			<button class="mb-5 btn btn-lg rounded-pill connect" type="submit">
-				Se connecter
-			</button>
+		<div class="form-floating mb-3 w-50">
+			<input type="email" value="{{ last_username }}" name="email" id="floatingInput" class="form-control rounded-pill" autocomplete="email" placeholder="Email" required autofocus>
+			<label for="floatingInput">Email</label>
 		</div>
+
+		<div class="form-floating mb-3 w-50">
+			<input type="password" name="password" id="floatingPassword" class="form-control rounded-pill" autocomplete="current-password" placeholder="Mot de passe" required>
+			<label for="floatingPassword">Mot de passe</label>
+		</div>
+
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+		<button type="submit" class="btn btn-lg connect rounded-pill">
+			Se connecter
+		</button>
 	</form>
-	<div class="ps-5 d-flex justify-content-center align-content-center">
-		<a href="{{ path('app_forgot_password_request') }}" class="forgot-password rounded-pill text-decoration-none">Mot de passe oublié ?</a>
+
+	<div class="mt-5 d-flex justify-content-center align-content-center">
+		<a href="{{ path('app_forgot_password_request') }}" class="forgot-password text-decoration-none rounded-pill">
+			Mot de passe oublié ?
+		</a>
 	</div>
 {% endblock %}

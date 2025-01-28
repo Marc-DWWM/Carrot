@@ -1,6 +1,43 @@
 {% extends 'base.html.twig' %}
-{% block title %}Home{% endblock %}
+{% block title %}Home
+{% endblock %}
 {% block body %}
+
+
+	<div class="head_desktop">
+		<img class="img_height" src="{{ asset('images/logo_carrot.png') }}" class="logo_carrot rounded mx-auto mt-5 ms-5" alt="logo carrot">
+	</div>
+
+	<h1 class="text-center me-5">Bienvenue</h1>
+
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Carrot</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto d-flex justify-content-end">
+					<li class="nav-item">
+						<a href="{{ path('app_login') }}" class="text-decoration-none nav-link">Se connecter</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ path('app_register') }}" class="text-decoration-none nav-link">S'inscrire</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	{% if app.user %}
+		<p>Connecté
+			{{ app.user.username }},
+			<a href="{{ path('app_logout') }}">Déconnecter</a>
+		</p>
+	{% endif %}
+
+{% endblock %}
+
     <h1>Welcome to the homepage</h1>
     <p>Click <a href="{{ path('app_login') }}">here</a> to login</p>
     <p>Click <a href="{{ path('app_register') }}">here</a> to register</p>

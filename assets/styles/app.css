@@ -1,81 +1,137 @@
 @media (min-width: 576px) {
     body {
-    background-color: #41342b;
-    }
-    h1 {
-    font-size: 90px;
-    padding-left: 100px;
-    font-weight: bold;
-    }
-    h2 {
-    font-size: 70px;
-    padding-left: 100px;
-    padding-bottom: 30px;
-    }
-    .title_register {
-    font-size: 50px;
-    padding-top: 100px;
-    padding-left: 100px;
-    padding-bottom: 20px;
-    }
-    h1, h2, h3 {
-    font-family: "Fredoka", serif;
-    color: #f8f7f4;
-    }
-    .button_register {
-    width: 600px;
-    color: #f8f7f4;
-    background-color: #ff6139;
-    height: 85px;
-    font-size: 40px;
-    font-weight: bold;
-    }
-    .button_register:hover {
-    color: #ff6139;
-    border: 3px solid #ff6139;
-    background-color: #f8f7f4;
+        background-color: #41342b;
     }
 
-    label {
-    color: #f8f7f4;
-    font-size: 30px;
+    h1, h2, h3 {
+        font-family: "Fredoka", serif;
+        color: #f8f7f4;
     }
+
+    h1 {
+        font-size: 90px;
+        padding-left: 100px;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 70px;
+        padding-left: 100px;
+        padding-bottom: 30px;
+    }
+    p {
+        font-family: "Poppins", serif;
+        color: #f8f7f4;
+        font-size: 20px;
+    }
+    .title-login {
+        padding-bottom: 100px;
+    }
+
+    .title_register {
+        font-size: 50px;
+        padding-top: 100px;
+        padding-left: 100px;
+        padding-bottom: 20px;
+    }
+
+    .button_register {
+        width: 600px;
+        color: #f8f7f4;
+        background-color: #ff6139;
+        height: 85px;
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .button_register:hover {
+        color: #ff6139;
+        border: 3px solid #ff6139;
+        background-color: #f8f7f4;
+    }
+
     .form-group {
-    
-    width: 600px;
-    } 
-    input {
-    height: 85px;
+        color: #f8f7f4;
+        width: 600px;
     }
-    input::placeholder {
-    padding-left: 20px;
-    font-size: 35px;
+    .form-control {
+        font-size: 25px;
+        height: 85px !important;
+        margin-bottom: 30px !important;
+    }
+
+    input {
+        width: 500px;
+        height: 85px;
+    }
+  
+    .form-floating label {
+        font-size: 30px;
+       padding-left: 35px;
+       border-radius: 150px;
     }
 
     .logo_carrot {
-    width: 33%;
+        width: 33%;
     }
+
     .img_height {
-    height: 400px;
+        height: 400px;
     }
 
     .checkbox {
-    width: 8%;
+        width: 8%;
     }
+
     .connect {
-    width: 500px;
+        width: 500px;
+        color: #ff6139;
+        border: 2px solid #ff6139;
+        height: 85px;
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    .connect:hover {
+        color: #f8f7f4;
+        background-color: #ff6139;
+    }
+
+    .forgot-password {
+        width: 500px;
+        color: #f8f7f4;
+        border: 2px solid #f8f7f4;
+        height: 85px;
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    .forgot-password:hover {
+        color: #ff6139;
+        background-color: #f8f7f4;
+    }
+    .btn-reset {
+    height: 85px;
+    font-size: 25px;
+    margin-left: 200px;
     color: #ff6139;
     border: 2px solid #ff6139;
-    height: 85px;
-    font-size: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
     }
-    .connect:hover {
-    color: #f8f7f4;
-    background-color: #ff6139;
+    .btn-reset:hover {
+    color: #ff6139;
+    background-color: #41342b;
+    }
+    .link-home {
+        font-size: 25px;
+    }
+    .navbar {
+        padding: 1rem 2rem;
     }
 }
 
@@ -84,6 +140,7 @@
         font-size: 60px;
         padding-left: 80px;
     }
+
     h2 {
         text-align: center;
         font-size: 50px;
@@ -91,59 +148,101 @@
         padding-top: 50px;
         padding-bottom: 70px;
     }
+    .title-mail {
+        padding: 0;
+    }
+    p {
+        text-align: center;
+        padding-bottom: 30px;
+    }
+    .title-carrot {
+        padding-left: 0px;
+    }
+    .title-login {
+        padding-left: 0px;
+    }
+
     .title_register {
         font-size: 30px;
         text-align: center;
     }
+
     .connect {
+        width: 200px;
         height: 60px;
         font-size: 20px;
-        width: 200px;
     }
+
     .form-actions {
         display: flex;
         justify-content: center;
     }
+
     .logo_carrot {
         width: 50%;
     }
+
     .img_height {
-        padding-left: 50px;
+        padding-right: 50px;
         height: 200px;
     }
-   
+
     .head_desktop {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
     .form-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
     .form-group {
-    
         width: 500px;
-        } 
-        input {
-        height: 50px;
-        }
-        input::placeholder {
-        padding-left: 20px;
-        font-size: 20px;
     }
+
+    input {
+        width: 400px;
+        height: 50px;
+    }
+
     label {
         font-size: 20px;
-        }
-     .button_register {
+    }
+
+    .button_register {
         width: 300px;
         height: 50px;
         font-size: 20px;
-    } 
+    }
+
     .checkbox {
         width: 5%;
-        }
+    }
+
+    .forgot-password {
+        width: 200px;
+        height: 60px;
+        font-size: 15px;
+    }
+    .desktop-reset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
+    .btn-reset {
+        margin-left: 50px;
+    }
+    .navbar {
+        padding: 1rem 4rem;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1.1rem;
+    }
 }

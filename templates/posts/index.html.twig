@@ -10,6 +10,7 @@
             <tr>
                 <th>Author</th>
                 <th>Original Poster</th>
+                <th>Repost?</th>
                 <th>Content</th>
                 <th>Created_at</th>
                 <th>actions</th>
@@ -20,6 +21,7 @@
             <tr>
                 <td>{{ post.author ? post.author.username : '' }}</td>
                 <td>{{ post.originalPost ? post.originalPost.author.username : post.author.username }}</td>
+                <td>{{ post.originalPost ? 'Yes' : 'No' }}</td>
                 <td>{{ post.content }}</td>
                 <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
@@ -34,6 +36,7 @@
                 <tr>
                     <td>{{ repost.author ? repost.author.username : '' }}</td>
                     <td>{{ post.author ? post.author.username : '' }}</td>
+                    <td>Yes</td>
                     <td>{{ repost.content }}</td>
                     <td>{{ repost.createdAt ? repost.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>

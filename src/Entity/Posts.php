@@ -35,11 +35,18 @@ class Posts
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'originalPost')]
     private Collection $reposts;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'posts')]
+    private Collection $likes;
+
     public function __construct(User $author)
     {
         $this->author = $author;
         $this->created_at = new \DateTimeImmutable();
         $this->reposts = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,6 +126,36 @@ class Posts
             // set the owning side to null (unless already changed)
             if ($repost->getOriginalPost() === $this) {
                 $repost->setOriginalPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setPosts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPosts() === $this) {
+                $like->setPosts(null);
             }
         }
 

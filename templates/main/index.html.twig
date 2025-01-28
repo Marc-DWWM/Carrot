@@ -19,33 +19,19 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ms-auto d-flex justify-content-end">
 					<li class="nav-item">
-						<a href="{{ path('app_login') }}" class="text-decoration-none nav-link">Se connecter</a>
+						{% if app.user %}
+							<a href="{{ path('app_logout') }}" class="text-decoration-none nav-link">Déconnecter</a>
+						{% endif %}
 					</li>
 					<li class="nav-item">
-						<a href="{{ path('app_register') }}" class="text-decoration-none nav-link">S'inscrire</a>
+						<a href="{{ path('app_profile') }}" class="text-decoration-none nav-link">Profil</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ path('app_posts_index') }}" class="text-decoration-none nav-link">Posts</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	{% if app.user %}
-		<p>Connecté
-			{{ app.user.username }},
-			<a href="{{ path('app_logout') }}">Déconnecter</a>
-		</p>
-	{% endif %}
-
-{% endblock %}
-
-    <h1>Welcome to the homepage</h1>
-    <p>Click <a href="{{ path('app_login') }}">here</a> to login</p>
-    <p>Click <a href="{{ path('app_register') }}">here</a> to register</p>
-    <p>Click <a href="{{ path('app_user_dashboard') }}">here</a> to view your profile</p>
-    <p>Click <a href="{{ path('app_posts_index') }}">here</a> to view all the posts</p>
-
-    {% if app.user %}
-        <p>You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a></p>
-    {% endif %}
-    
 {% endblock %}

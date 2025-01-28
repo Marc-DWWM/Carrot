@@ -32,7 +32,7 @@ final class HomePageController extends AbstractController
     }
 
     
-    #[Route('/user/dashboard', name: 'app_user_dashboard')]
+    #[Route('/dashboard', name: 'app_user_dashboard')]
     public function userDashboard(): Response
     {
         return $this->render('user/dashboard.html.twig');

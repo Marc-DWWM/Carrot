@@ -20,12 +20,12 @@ class LikeController extends AbstractController
         $like = $em->getRepository(Like::class)->findOneBy(['posts' => $posts, 'user' => $user]);
 
         if ($like) {
-            $em->remove($like); // Supprimer le like existant
+            $em->remove($like);
         } else {
             $newLike = new Like();
             $newLike->setPosts($posts);
             $newLike->setUser($user);
-            $em->persist($newLike); // Ajouter un nouveau like
+            $em->persist($newLike);
         }
 
         $em->flush();
@@ -33,7 +33,7 @@ class LikeController extends AbstractController
         // Redirection vers la page de l'article
         //return $this->redirectToRoute('app_posts_show', ['id' => $posts->getId()]);
 
-         // Retourner une réponse JSON avec l'état du like et le nouveau nombre de likes
+         // Retourner une réponse JSON 
         return $this->json([
             'status' => 'success',
             'liked' => $like ? false : true,

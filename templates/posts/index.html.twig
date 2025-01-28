@@ -32,10 +32,14 @@
                     <a href="{{ path('app_posts_repost', {'id': post.id}) }}">repost</a>
 
                     <div class="likes">
-                    <button class="like-button" data-post-id="{{ post.id }}">
-                        {{ post.likes|filter(l => l.user == app.user)|length > 0 ? 'Unlike' : 'Like' }}
-                    </button>
-                    <span class="like-count">{{ post.likes|length }}</span> likes
+                        <button class="like-button" data-post-id="{{ post.id }}">
+                            {% if post.likes|filter(l => l.user == app.user)|length > 0 %}
+                                <img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
+                            {% else %}
+                                <img src="{{asset('images/like.svg')}}" alt="Llike" width="24" height="24"/>
+                            {% endif %}
+                        </button>
+                        <span class="like-count">{{ post.likes|length }}</span>
                     </div>
 
                 </td>
@@ -53,6 +57,26 @@
                         {% if repost.author == app.user %}
                             <a href="{{ path('app_posts_edit', {'id': repost.id}) }}">edit</a>
                         {% endif %}
+
+
+                        {# <div class="likes">
+                    <button class="like-button" data-post-id="{{ post.id }}">
+                        {{ post.likes|filter(l => l.user == app.user)|length > 0 ? 'Unlike' : 'Like' }}
+                    </button>
+                    <span class="like-count">{{ post.likes|length }}</span>
+                    </div> #}
+                    <div class="likes">
+                        <button class="like-button" data-post-id="{{ post.id }}">
+                            {% if post.likes|filter(l => l.user == app.user)|length > 0 %}
+                                <img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
+                            {% else %}
+                                <img src="{{asset('images/like.svg')}}" alt="Llike" width="24" height="24"/>
+                            {% endif %}
+                        </button>
+                        <span class="like-count">{{ post.likes|length }}</span>
+                    </div>
+
+
                     </td>
                 </tr>
             {% endfor %}
@@ -67,6 +91,10 @@
     <a href="{{ path('app_posts_new') }}">Create new</a>
 {% endblock %}
 
+
+
+
+{# Fonction Like en event.preventDefault #}
 {% block javascripts %}
     {{ parent() }}
     <script>

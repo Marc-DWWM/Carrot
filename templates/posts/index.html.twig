@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts index{% endblock %}
+
+{% block body %}
+    <h1>Posts index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Original Poster</th>
+                <th>Content</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.author ? post.author.username : '' }}</td>
+                <td>{{ post.originalPost ? post.originalPost.author.username : post.author.username }}</td>
+                <td>{{ post.content }}</td>
+                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_posts_show', {'id': post.id}) }}">show</a>
+                    {% if app.user and post.author == app.user %}
+                        <a href="{{ path('app_posts_edit', {'id': post.id}) }}">edit</a>
+                    {% endif %}
+                    <a href="{{ path('app_posts_repost', {'id': post.id}) }}">repost</a>
+                </td>
+            </tr>
+            {% for repost in post.reposts %}
+                <tr>
+                    <td>{{ repost.author ? repost.author.username : '' }}</td>
+                    <td>{{ post.author ? post.author.username : '' }}</td>
+                    <td>{{ repost.content }}</td>
+                    <td>{{ repost.createdAt ? repost.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_posts_show', {'id': repost.id}) }}">show</a>
+                        {% if repost.author == app.user %}
+                            <a href="{{ path('app_posts_edit', {'id': repost.id}) }}">edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_posts_new') }}">Create new</a>
+{% endblock %}

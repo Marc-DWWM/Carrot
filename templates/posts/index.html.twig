@@ -30,8 +30,18 @@
                         <a href="{{ path('app_posts_edit', {'id': post.id}) }}">edit</a>
                     {% endif %}
                     <a href="{{ path('app_posts_repost', {'id': post.id}) }}">repost</a>
+
+                    <div class="likes">
+                        <form method="POST" action="{{ path('posts_like', {'id': post.id}) }}">
+                            <button type="submit">
+                            {{ post.likes|filter(l => l.user == app.user)|length > 0 ? 'Unlike' : 'Like' }}
+                            </button>
+                        </form>
+                        <span class="like-count">{{ post.likes|length }}</span>
+                    </div>
                 </td>
             </tr>
+            
             {% for repost in post.reposts %}
                 <tr>
                     <td>{{ repost.author ? repost.author.username : '' }}</td>

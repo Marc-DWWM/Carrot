@@ -16,9 +16,6 @@ class Like
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $heart = null;
-
     #[ORM\ManyToOne(inversedBy: 'likes')]
     private ?User $user = null;
 
@@ -29,19 +26,7 @@ class Like
     {
         return $this->id;
     }
-
-    public function getHeart(): ?int
-    {
-        return $this->heart;
-    }
-
-    public function setHeart(int $heart): static
-    {
-        $this->heart = $heart;
-
-        return $this;
-    }
-
+    
     public function getUser(): ?User
     {
         return $this->user;

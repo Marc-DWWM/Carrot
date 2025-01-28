@@ -37,15 +37,3 @@
 	{% endif %}
 
 {% endblock %}
-
-    <h1>Welcome to the homepage</h1>
-    <p>Click <a href="{{ path('app_login') }}">here</a> to login</p>
-    <p>Click <a href="{{ path('app_register') }}">here</a> to register</p>
-    <p>Click <a href="{{ path('app_user_dashboard') }}">here</a> to view your profile</p>
-    <p>Click <a href="{{ path('app_posts_index') }}">here</a> to view all the posts</p>
-
-    {% if app.user %}
-        <p>You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a></p>
-    {% endif %}
-    
-{% endblock %}

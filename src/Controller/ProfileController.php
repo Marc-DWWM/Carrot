@@ -2,22 +2,33 @@
 
 namespace App\Controller;
 
-use App\Repository\PostsRepository;
-use App\Repository\UserRepository;
+Use App\Entity\Posts;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/profile')]
+#[Route('/profil', name: 'profile_')]
 
 final class ProfileController extends AbstractController
 {
-    #[Route('/', name: 'app_profile')]
-    public function profile(UserRepository $user, PostsRepository $posts): Response
+    #[Route('/', name: 'index')]
+    public function index(): Response
     {
-        $posts = $postsRepository->findBy(['author' => $author, 'content' => $content, 'created_at' => $created_at]);
+
+
         return $this->render('profile/index.html.twig', [
-            'controller_name' => 'ProfileController',
+            'controller_name' => 'Profil de l\'utilisateur',
+        ]);
+    }
+
+    #[Route('/posts', name: 'posts')]
+    public function posts(): Response
+    {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $posts = $user->getPosts();    
+        return $this->render('profile/posts.html.twig', [
+            'posts' => $posts,
         ]);
     }
 }

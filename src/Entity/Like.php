@@ -20,6 +20,7 @@ class Like
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")] // ADDED NOW
     private ?Posts $posts = null;
 
     public function getId(): ?int

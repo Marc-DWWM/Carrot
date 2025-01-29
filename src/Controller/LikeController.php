@@ -7,6 +7,8 @@ use App\Entity\Like;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -40,5 +42,19 @@ class LikeController extends AbstractController
             'likeCount' => count($posts->getLikes())
         ]);
     }
+
+    public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
+        {
+    
+            $likes = $post->getLikes(); 
+            foreach ($likes as $like) {
+                $entityManager->remove($like); 
+            }
+
+            $entityManager->remove($post); 
+            $entityManager->flush(); 
+
+            return $this->redirectToRoute('app_posts');
+        }
 }
 

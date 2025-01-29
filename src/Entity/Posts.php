@@ -26,7 +26,6 @@ class Posts
     private ?User $author = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'reposts')]
-    #[ORM\JoinColumn(name: 'original_post_id', referencedColumnName: 'id')]
     private ?self $originalPost = null;
 
     /**

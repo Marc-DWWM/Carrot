@@ -26,7 +26,7 @@ class Posts
     private ?User $author = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'reposts')]
-    #[ORM\JoinColumn(name: 'original_post_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'original_post_id', referencedColumnName: 'id', onDelete: "CASCADE")]
     private ?self $originalPost = null;
 
     /**
@@ -35,11 +35,18 @@ class Posts
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'originalPost')]
     private Collection $reposts;
 
+    /**
+     * @var Collection<int, Comments>
+     */
+    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'post', cascade: ['remove'], orphanRemoval: true)]
+    private Collection $comments;
+
     public function __construct(User $author)
     {
         $this->author = $author;
         $this->created_at = new \DateTimeImmutable();
         $this->reposts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,6 +126,36 @@ class Posts
             // set the owning side to null (unless already changed)
             if ($repost->getOriginalPost() === $this) {
                 $repost->setOriginalPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
             }
         }
 

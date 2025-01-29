@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Posts;
 use App\Form\PostsType;
+use App\Form\CommentsType;
 use App\Repository\PostsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,11 +47,27 @@ final class PostsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_posts_show', methods: ['GET'])]
-    public function show(Posts $post): Response
+    #[Route('/{id}', name: 'app_posts_show', methods: ['GET', 'POST'])]
+    public function show(Posts $post, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $comment = new Comments();
+        $commentsForm = $this->createForm(CommentsType::class, $comment);
+        $commentsForm->handleRequest($request);
+
+        if ($commentsForm->isSubmitted() && $commentsForm->isValid()) {
+            $comment->setPost($post);
+            $comment->setUser($this->getUser());
+            $comment->setCreatedAt(new \DateTimeImmutable());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_posts_show', ['id' => $post->getId()], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('posts/show.html.twig', [
             'post' => $post,
+            'commentsForm' => $commentsForm->createView(),
         ]);
     }
 
@@ -75,20 +93,23 @@ final class PostsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_posts_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_posts_delete', methods: ['POST'])]
     public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
-    {
-        if ($post->getAuthor() !== $this->getUser()) {
-            throw $this->createAccessDeniedException("Vous n'êtes pas l'auteur de ce post");
-        }
-
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($post);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
+{
+    if ($post->getAuthor() !== $this->getUser()) {
+        throw $this->createAccessDeniedException("Vous n'êtes pas l'auteur de ce post");
     }
+    if (!$this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
+        throw $this->createAccessDeniedException('Token CSRF invalide');
+    }
+
+    $entityManager->remove($post);
+    $entityManager->flush();
+
+
+
+    return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
+}
 
     #[Route('/{id}/repost', name: 'app_posts_repost', methods: ['GET'])]
     public function repost(EntityManagerInterface $entityManager, Posts $post): Response

@@ -56,6 +56,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'user')]
     private Collection $likes;
+
+    /**
      * @var Collection<int, Comments>
      */
     #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'user')]
@@ -198,6 +200,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->likes->contains($like)) {
             $this->likes->add($like);
             $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Comments>
      */
     public function getComments(): Collection
@@ -221,6 +229,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($like->getUser() === $this) {
                 $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function removeComment(Comments $comment): static
     {
         if ($this->comments->removeElement($comment)) {

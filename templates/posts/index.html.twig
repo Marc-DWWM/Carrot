@@ -30,8 +30,21 @@
                         <a href="{{ path('app_posts_edit', {'id': post.id}) }}">edit</a>
                     {% endif %}
                     <a href="{{ path('app_posts_repost', {'id': post.id}) }}">repost</a>
+
+                    <div class="likes">
+                        <button class="like-button" data-post-id="{{ post.id }}">
+                            {% if post.likes|filter(l => l.user == app.user)|length > 0 %}
+                                <img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
+                            {% else %}
+                                <img src="{{asset('images/like.svg')}}" alt="Llike" width="24" height="24"/>
+                            {% endif %}
+                        </button>
+                        <span class="like-count">{{ post.likes|length }}</span>
+                    </div>
+
                 </td>
             </tr>
+            
             {% for repost in post.reposts %}
                 <tr>
                     <td>{{ repost.author ? repost.author.username : '' }}</td>
@@ -44,6 +57,26 @@
                         {% if repost.author == app.user %}
                             <a href="{{ path('app_posts_edit', {'id': repost.id}) }}">edit</a>
                         {% endif %}
+
+
+                        {# <div class="likes">
+                    <button class="like-button" data-post-id="{{ post.id }}">
+                        {{ post.likes|filter(l => l.user == app.user)|length > 0 ? 'Unlike' : 'Like' }}
+                    </button>
+                    <span class="like-count">{{ post.likes|length }}</span>
+                    </div> #}
+                    <div class="likes">
+                        <button class="like-button" data-post-id="{{ post.id }}">
+                            {% if post.likes|filter(l => l.user == app.user)|length > 0 %}
+                                <img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
+                            {% else %}
+                                <img src="{{asset('images/like.svg')}}" alt="Llike" width="24" height="24"/>
+                            {% endif %}
+                        </button>
+                        <span class="like-count">{{ post.likes|length }}</span>
+                    </div>
+
+
                     </td>
                 </tr>
             {% endfor %}
@@ -56,4 +89,47 @@
     </table>
 
     <a href="{{ path('app_posts_new') }}">Create new</a>
+{% endblock %}
+
+
+
+
+{# Fonction Like en event.preventDefault #}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const likeButtons = document.querySelectorAll('.like-button');
+
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); 
+                    const postId = this.dataset.postId;
+                    const button = this;
+                    
+                    fetch('{{ path('posts_like', {'id': '__post_id__'}) }}'.replace('__post_id__', postId), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({}) 
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            button.textContent = data.liked ? 'Unlike' : 'Like';
+                            const likeCount = button.nextElementSibling;
+                            likeCount.textContent = data.likeCount;
+                        } else {
+                            alert('Erreur lors de la mise à jour du like');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Une erreur est survenue');
+                    });
+                });
+            });
+        });
+    </script>
 {% endblock %}

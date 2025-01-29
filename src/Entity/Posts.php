@@ -36,6 +36,10 @@ class Posts
     private Collection $reposts;
 
     /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'posts')]
+    private Collection $likes;
      * @var Collection<int, Comments>
      */
     #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'post', cascade: ['remove'], orphanRemoval: true)]
@@ -46,6 +50,7 @@ class Posts
         $this->author = $author;
         $this->created_at = new \DateTimeImmutable();
         $this->reposts = new ArrayCollection();
+        $this->likes = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -133,6 +138,19 @@ class Posts
     }
 
     /**
+
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): static
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setPosts($this);
      * @return Collection<int, Comments>
      */
     public function getComments(): Collection
@@ -150,6 +168,12 @@ class Posts
         return $this;
     }
 
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPosts() === $this) {
+                $like->setPosts(null);
     public function removeComment(Comments $comment): static
     {
         if ($this->comments->removeElement($comment)) {

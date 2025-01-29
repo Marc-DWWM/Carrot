@@ -26,6 +26,7 @@ class Posts
     private ?User $author = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'reposts')]
+    #[ORM\JoinColumn(name: 'original_post_id', referencedColumnName: 'id', onDelete: "CASCADE")]
     private ?self $originalPost = null;
 
     /**
@@ -39,6 +40,10 @@ class Posts
      */
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'posts')]
     private Collection $likes;
+     * @var Collection<int, Comments>
+     */
+    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'post', cascade: ['remove'], orphanRemoval: true)]
+    private Collection $comments;
 
     public function __construct(User $author)
     {
@@ -46,6 +51,7 @@ class Posts
         $this->created_at = new \DateTimeImmutable();
         $this->reposts = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +138,7 @@ class Posts
     }
 
     /**
+
      * @return Collection<int, Like>
      */
     public function getLikes(): Collection
@@ -144,6 +151,18 @@ class Posts
         if (!$this->likes->contains($like)) {
             $this->likes->add($like);
             $like->setPosts($this);
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPost($this);
         }
 
         return $this;
@@ -155,6 +174,12 @@ class Posts
             // set the owning side to null (unless already changed)
             if ($like->getPosts() === $this) {
                 $like->setPosts(null);
+    public function removeComment(Comments $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
             }
         }
 

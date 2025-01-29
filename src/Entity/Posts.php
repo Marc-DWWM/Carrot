@@ -26,7 +26,7 @@ class Posts
     private ?User $author = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'reposts')]
-    #[ORM\JoinColumn(name: 'original_post_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'original_post_id', referencedColumnName: 'id', onDelete: "CASCADE")]
     private ?self $originalPost = null;
 
     /**
@@ -38,7 +38,7 @@ class Posts
     /**
      * @var Collection<int, Comments>
      */
-    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'post')]
+    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'post', cascade: ['remove'], orphanRemoval: true)]
     private Collection $comments;
 
     public function __construct(User $author)

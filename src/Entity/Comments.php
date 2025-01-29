@@ -23,6 +23,7 @@ class Comments
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Posts $post = null;
 
     public function getId(): ?int

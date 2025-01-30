@@ -32,10 +32,6 @@ class LikeController extends AbstractController
 
         $em->flush();
 
-        // Redirection vers la page de l'article
-        //return $this->redirectToRoute('app_posts_show', ['id' => $posts->getId()]);
-
-         // Retourner une réponse JSON 
         return $this->json([
             'status' => 'success',
             'liked' => $like ? false : true,
@@ -43,18 +39,18 @@ class LikeController extends AbstractController
         ]);
     }
 
-    public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
-        {
+    // public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
+       // {
     
-            $likes = $post->getLikes(); 
-            foreach ($likes as $like) {
-                $entityManager->remove($like); 
-            }
+         //   $likes = $post->getLikes(); 
+         //   foreach ($likes as $like) {
+         //       $entityManager->remove($like); 
+          //  }
 
-            $entityManager->remove($post); 
-            $entityManager->flush(); 
+         //   $entityManager->remove($post); 
+          //  $entityManager->flush(); 
 
-            return $this->redirectToRoute('app_posts');
-        }
+         //   return $this->redirectToRoute('app_posts');
+     //   }
 }
 

@@ -51,8 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Posts::class, mappedBy: 'author')]
     private Collection $posts;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string')]
     private ?string $photo = null;
+
 
     public function __construct()
     {
@@ -176,17 +177,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
-
-    public function setPhoto(string $photo): static
+    
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
-
         return $this;
     }
+    
  
-
 }

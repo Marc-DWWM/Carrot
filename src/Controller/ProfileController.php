@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Posts;
-use App\Entity\User;
+
 use App\Form\PictureProfilType;
-use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -40,30 +39,38 @@ final class ProfileController extends AbstractController
         ]);
     }
     #[Route('/modifier', name: 'modifier')]
-    public function modifierProfil(Request $request, SluggerInterface $slugger,  #[Autowire('%kernel.project_dir%/public/uploads/brochures')] string $picturesDirectory): Response
-    {
-        $picture = new Picture();
-        $form = $this->createForm(PictureProfilType::class, $picture);
+    public function uploadPicture(
+        Request $request,
+        SluggerInterface $slugger,
+        #[Autowire('%kernel.project_dir%/public/uploads')] string $picturesDirectory,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $user = $this->getUser();
+        $form = $this->createForm(PictureProfilType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $pictureFile */
             $pictureFile = $form->get('picture')->getData();
-            if ($pictureFile) {
-                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+            $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
 
-                try {
-                    $pictureFile->move($picturesDirectory, $newFilename);
-                } catch (FileException $e) {
-                }
-                $picture->setPhoto($newFilename);
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+
+            try {
+                $pictureFile->move($picturesDirectory, $newFilename);
+            } catch (FileException $e) {
             }
-            return $this->redirectToRoute('app_profil_index');
+            $user->setPhoto($newFilename);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            
+            return $this->redirectToRoute('profile_index');
         }
         return $this->render('profile/modifier.html.twig', [
-            'form' => $form,
+            'pictureProfil' => $form->createView(),
+            'user' => $user,
         ]);
     }
 }

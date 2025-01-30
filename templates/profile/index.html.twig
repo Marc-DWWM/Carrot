@@ -10,7 +10,8 @@
 				azerty
 			</div>
 			<div class="col" _msttexthash="77766" _msthash="252">
-			<h1>Hello {{ controller_name }}!</h1>
+				<h1>Hello
+					{{ controller_name }}!</h1>
 				Username :
 				{{ app.user.username }}
 			</div>
@@ -21,16 +22,12 @@
 			</div>
 
 			<div class="col" _msttexthash="52403" _msthash="256">
-				<a href="#" class="btn-primary">Modifier le profil</a>
+				<a href="{{ path('profile_modifier') }}" class="btn-primary">Modifier le profil</a>
 			</div>
 		</div>
 	</div>
 	<div class="col">
-		<a href="{{ path('profile_posts') }}">Post</a>
+		<a href="{{ path('profile_posts') }}">Posts</a>
 	</div>
-	{# {% for post in posts %}
-		<div class="col">{{ post.author }}</div>
-		<div class="col">{{ post.content }}</div>
-		<div class="col">{{ post.created_at }}</div>
-	{% endfor %} #}
+
 {% endblock %}

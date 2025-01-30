@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+<h1>Modifier Profil</h1>
+
+{{ form_start(PictureProfil) }}
+
+{{ form_row(PictureProfil.username) }}
+
+{{ form_row(PictureProfil.photo) }}
+
+{{ form_end(PictureProfil) }}

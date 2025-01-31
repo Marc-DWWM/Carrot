@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier Profil
+{% endblock %}
+{% block body %}
+<a href="{{ path('app_home_page') }}">Page d'accueil</a>
+<a href="{{ path('profile_index') }}">Profil</a>
+	<h1>Modifier Profil</h1>
+	{{ form_errors(pictureProfil) }}
+	{{ form_start(pictureProfil) }}
+	{{ form_rest(pictureProfil.picture) }}
+	<button type="submit">Valider</button>
+	{{ form_end(pictureProfil) }}
+{% endblock %}

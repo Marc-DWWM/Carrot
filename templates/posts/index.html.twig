@@ -1,127 +1,107 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Posts index{% endblock %}
+{% block title %}Posts index
+{% endblock %}
 
 {% block body %}
-    <h1>Posts index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Author</th>
-                <th>Original Poster</th>
-                <th>Repost?</th>
-                <th>Content</th>
-                <th>Created_at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for post in posts %}
-            <tr>
-                <td>{{ post.author ? post.author.username : '' }}</td>
-                <td>{{ post.originalPost ? post.originalPost.author.username : post.author.username }}</td>
-                <td>{{ post.originalPost ? 'Yes' : 'No' }}</td>
-                <td>{{ post.content }}</td>
-                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_posts_show', {'id': post.id}) }}">show</a>
-                    {% if app.user and post.author == app.user %}
-                        <a href="{{ path('app_posts_edit', {'id': post.id}) }}">edit</a>
-                    {% endif %}
-                    <a href="{{ path('app_posts_repost', {'id': post.id}) }}">repost</a>
+	<h1>Quoi de neuf ?
+	</h1>
 
-                    <div class="likes">
-                        <button class="like-button" data-post-id="{{ post.id }}">
-                            {% if post.likes|filter(l => l.user == app.user)|length > 0 %}
-                                <img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
-                            {% else %}
-                                <img src="{{asset('images/like.svg')}}" alt="Like" width="24" height="24"/>
-                            {% endif %}
-                        </button>
-                        <span class="like-count">{{ post.likes|length }}</span>
-                    </div>
+	<div class="posts-container ms-5">
+		{% for post in posts %}
+			<div class="post">
+				<p>{{ post.author ? post.author.username : '' }}</p>
+				<p>{{ post.content }}</p>
+				<p>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</p>
 
-                </td>
-            </tr>
-            
-            {% for repost in post.reposts %}
-                <tr>
-                    <td>{{ repost.author ? repost.author.username : '' }}</td>
-                    <td>{{ post.author ? post.author.username : '' }}</td>
-                    <td>Yes</td>
-                    <td>{{ repost.content }}</td>
-                    <td>{{ repost.createdAt ? repost.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>
-                        <a href="{{ path('app_posts_show', {'id': repost.id}) }}">show</a>
-                        {% if repost.author == app.user %}
-                            <a href="{{ path('app_posts_edit', {'id': repost.id}) }}">edit</a>
-                        {% endif %}
+				<div class="actions">
+					<a href="{{ path('app_posts_show', {'id': post.id}) }}">Voir plus</a>
+					{% if app.user and post.author == app.user %}
+						<a href="{{ path('app_posts_edit', {'id': post.id}) }}">Modifier</a>
+					{% endif %}
+					<a href="{{ path('app_posts_repost', {'id': post.id}) }}">Republier</a>
 
-                        <div class="likes">
-                            <button class="like-button" data-post-id="{{ repost.id }}">
-                                {% if repost.likes|filter(l => l.user == app.user)|length > 0 %}
-                                    <img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
-                                {% else %}
-                                    <img src="{{asset('images/like.svg')}}" alt="Like" width="24" height="24"/>
-                                {% endif %}
-                            </button>
-                            <span class="like-count">{{ repost.likes|length }}</span>
-                        </div>
+					<div class="likes">
+						<button class="like-button" data-post-id="{{ post.id }}">
+							{% if post.likes|filter(l => l.user == app.user)|length > 0 %}
+								<img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
+							{% else %}
+								<img src="{{asset('images/like.svg')}}" alt="Like" width="24" height="24"/>
+							{% endif %}
+						</button>
+						<span class="like-count">{{ post.likes|length }}</span>
+					</div>
+				</div>
 
-                    </td>
-                </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_posts_new') }}">Create new</a>
-{% endblock %}
+			</div>
 
 
+			{% for repost in post.reposts %}
+				<div class="repost">
+					<p>Publication de 
+						{{ post.author ? post.author.username : '' }}, republier par {{ repost.author ? repost.author.username : '' }}</p>
+					<p>{{ post.author ? post.author.username : '' }}</p>
+					<p>{{ repost.content }}</p>
+					<p>{{ repost.createdAt ? repost.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+
+					<div class="actions">
+						<a href="{{ path('app_posts_show', {'id': repost.id}) }}">Voir plus</a>
+						{% if repost.author == app.user %}
+							<a href="{{ path('app_posts_edit', {'id': repost.id}) }}">Modifier</a>
+						{% endif %}
+
+						<div class="likes">
+							<button class="like-button" data-post-id="{{ repost.id }}">
+								{% if repost.likes|filter(l => l.user == app.user)|length > 0 %}
+									<img src="{{asset('images/unlike.svg')}}" alt="Unlike" width="24" height="24"/>
+								{% else %}
+									<img src="{{asset('images/like.svg')}}" alt="Like" width="24" height="24"/>
+								{% endif %}
+							</button>
+							<span class="like-count">{{ repost.likes|length }}</span>
+						</div>
+					</div>
 
 
-{# Fonction Like en event.preventDefault #}
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const likeButtons = document.querySelectorAll('.like-button');
+				</div>
+			{% endfor %}
 
-            likeButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault(); 
-                    const postId = this.dataset.postId;
-                    const button = this;
-                    
-                    fetch('{{ path('posts_like', {'id': '__post_id__'}) }}'.replace('__post_id__', postId), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify({}) 
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            button.textContent = data.liked ? 'Unlike' : 'Like';
-                            const likeCount = button.nextElementSibling;
-                            likeCount.textContent = data.likeCount;
-                        } else {
-                            alert('Erreur lors de la mise à jour du like');
-                        }
-                    })
-                    .catch(error => {
-                        alert('Une erreur est survenue');
-                    });
-                });
-            });
-        });
-    </script>
-{% endblock %}
+		</div>
+
+	{% else %}
+		<tr>
+			<p colspan="6">no records found</p>
+		</tr>
+	{% endfor %}
+</tbody></table><a href="{{ path('app_posts_new') }}">Create new</a>{% endblock %}{# Fonction Like en event.prevenpefault #}{% block javascripts %}{{ parent() }}<script>
+document.addEventListener('DOMContentLoaded', function () {
+const likeButtons = document.querySelectorAll('.like-button');
+
+likeButtons.forEach(button => {
+button.addEventListener('click', function (event) {
+event.prevenpefault();
+const postId = this.dataset.postId;
+const button = this;
+
+fetch('{{ path('posts_like', {'id': '__post_id__'}) }}'.replace('__post_id__', postId), {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-Requested-With': 'XMLHttpRequest'
+},
+body: JSON.stringify({})
+}).then(response => response.json()).then(data => {
+if (data.status === 'success') {
+button.textContent = data.liked ? 'Unlike' : 'Like';
+const likeCount = button.nextElementSibling;
+likeCount.textContent = data.likeCount;
+} else {
+alert('Erreur lors de la mise à jour du like');
+}
+}).catch(error => {
+alert('Une erreur est survenue');
+});
+});
+});
+});</script>{% endblock %}

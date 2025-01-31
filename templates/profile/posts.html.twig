@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profil Utilisateur
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('app_home_page') }}">Page d'accueil</a>
+	<a href="{{ path('profile_index') }}">Profil</a>
+	<div class="container text-center">
+		<div>
+			<div class="col" _msttexthash="77766" _msthash="252">
+
+				<h1>Hello
+					{{ app.user.username }}!</h1>
+				{% if app.user.photo %}
+					<img src="{{ asset('uploads/' ~ app.user.photo) }}" alt="Photo de profil">
+				{% else %}
+					<p>Aucune photo de profil.</p>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row">
+			<div>
+				<p>écrire ici sa bio</p>
+			</div>
+
+			<div class="col" _msttexthash="52403" _msthash="256">
+				<a href="{{ path('profile_modifier') }}" class="btn-primary">Modifier le profil</a>
+			</div>
+		</div>
+	</div>
+	<div class="col">
+		<p>Posts</p>
+	</div>
+	{% for post in posts %}
+		<div class="col">{{ post.author.username }}</div>
+		<div class="col">{{ post.content }}</div>
+		<div class="col">{{ post.createdAt|date('d/m/Y H:i') }}</div>
+
+	{% endfor %}
+{% endblock %}

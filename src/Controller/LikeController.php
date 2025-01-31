@@ -43,18 +43,18 @@ class LikeController extends AbstractController
         ]);
     }
 
-    public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
-        {
+    // public function delete(Request $request, Posts $post, EntityManagerInterface $entityManager): Response
+       // {
     
-            $likes = $post->getLikes(); 
-            foreach ($likes as $like) {
-                $entityManager->remove($like); 
-            }
+         //   $likes = $post->getLikes(); 
+         //   foreach ($likes as $like) {
+         //       $entityManager->remove($like); 
+          //  }
 
-            $entityManager->remove($post); 
-            $entityManager->flush(); 
-
-            return $this->redirectToRoute('app_posts');
-        }
+         //   $entityManager->remove($post); 
+          //  $entityManager->flush(); 
+//
+         //   return $this->redirectToRoute('app_posts');
+     //   }
 }
 

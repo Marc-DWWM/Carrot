@@ -140,7 +140,6 @@ class Posts
     }
 
     /**
-
      * @return Collection<int, Like>
      */
     public function getLikes(): Collection
@@ -153,6 +152,18 @@ class Posts
         if (!$this->likes->contains($like)) {
             $this->likes->add($like);
             $like->setPosts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): static
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPosts() === $this) {
+                $like->setPosts(null);
+            }
         }
 
         return $this;
@@ -176,18 +187,6 @@ class Posts
         return $this;
     }
 
-    public function removeLike(Like $like): static
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getPosts() === $this) {
-                $like->setPosts(null);
-            }
-        }
-
-        return $this;
-    }
-                
     public function removeComment(Comments $comment): static
     {
         if ($this->comments->removeElement($comment)) {

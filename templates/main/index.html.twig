@@ -34,4 +34,13 @@
 		</div>
 	</nav>
 
+	{% if app.user %}
+		<p>Connecté
+			{{ app.user.username }},
+			<a href="{{ path('app_logout') }}">Déconnecter</a>
+		</p>
+	{% endif %}
+
+{% endblock %}
+
 {% endblock %}

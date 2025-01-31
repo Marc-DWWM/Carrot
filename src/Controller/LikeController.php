@@ -32,6 +32,10 @@ class LikeController extends AbstractController
 
         $em->flush();
 
+        // Redirection vers la page de l'article
+        //return $this->redirectToRoute('app_posts_show', ['id' => $posts->getId()]);
+
+         // Retourner une réponse JSON 
         return $this->json([
             'status' => 'success',
             'liked' => $like ? false : true,
@@ -49,7 +53,7 @@ class LikeController extends AbstractController
 
          //   $entityManager->remove($post); 
           //  $entityManager->flush(); 
-
+//
          //   return $this->redirectToRoute('app_posts');
      //   }
 }

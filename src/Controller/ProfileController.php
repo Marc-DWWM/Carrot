@@ -52,20 +52,25 @@ final class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $pictureFile */
             $pictureFile = $form->get('picture')->getData();
-            $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = $slugger->slug($originalFilename);
 
-            $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+            if ($pictureFile) {
+                  /** @var \App\Entity\User $user */
+                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
 
-            try {
-                $pictureFile->move($picturesDirectory, $newFilename);
-            } catch (FileException $e) {
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+
+                try {
+                    $pictureFile->move($picturesDirectory, $newFilename);
+                } catch (FileException $e) {
+                    echo "Image non valide " . $e->getMessage();
+                }
+                $user->setPhoto($newFilename);
             }
-            $user->setPhoto($newFilename);
             $entityManager->persist($user);
             $entityManager->flush();
 
-            
+
             return $this->redirectToRoute('profile_index');
         }
         return $this->render('profile/modifier.html.twig', [

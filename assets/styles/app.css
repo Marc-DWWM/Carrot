@@ -1,6 +1,8 @@
-@media (min-width: 576px) {
+
     body {
         background-color: #41342b;
+        margin : 0 auto;
+        box-sizing: border-box;
     }
 
     h1, h2, h3 {
@@ -64,19 +66,15 @@
         width: 500px;
         height: 85px;
     }
-  
+
     .form-floating label {
         font-size: 30px;
-       padding-left: 35px;
-       border-radius: 150px;
+        padding-left: 35px;
+        border-radius: 150px;
     }
 
     .logo_carrot {
-        width: 33%;
-    }
-
-    .img_height {
-        height: 400px;
+        width: 50px;
     }
 
     .checkbox {
@@ -133,7 +131,77 @@
     .navbar {
         padding: 1rem 2rem;
     }
-}
+
+
+     /* POST STYLES */
+
+    .publish-post{
+        background-color: #ff6139;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        gap : 20px;
+    }
+    .posts-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        gap : 20px;
+        
+    }
+
+    .post h4, a {
+        color : #fff;
+    }
+    .post h4{
+        font-size : 32px;
+    }
+
+    .post {
+        background: #1F1813;
+        padding: 25px;
+        border-radius: 8px;
+        width: 100%;
+    }
+    .repost {
+        background: #726052;
+        padding: 25px;
+        border-radius: 8px;
+        width: 100%;
+    }
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        border-top : 1px solid #fff;
+        margin-top: 10px;
+    }
+    button {
+        background-color: transparent;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .actions{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        border-top : 1px solid #fff;
+        margin-top: 10px;
+    }
+
+
+
+
+
 
 @media (min-width: 992px) {
     h1 {
